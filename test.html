@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Имитация экзамена В3</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Подключение файла со стилями -->
+</head>
+<body>
+    <h1>Имитация экзамена В3</h1>
+
+    <button onclick="goToHomePage()">Назад на главную страницу</button> <!-- Кнопка "Назад на главную страницу" в начале -->
+
+    <div id="quiz-container">
+        <!-- Questions and options will be added dynamically here -->
+    </div>
+
+    <div id="results-container">
+        <!-- Quiz results will be displayed here -->
+    </div>
+
+    <button onclick="submitQuiz()">Ответить</button>
+
+    <button onclick="goToHomePage()">Назад на главную страницу</button> <!-- Кнопка "Назад на главную страницу" в конце -->
+
+    <script src="questions.js"></script> <!-- Подключение файла с вопросами -->
+
+    <script>
+        var selectedQuestions = [];
+        
+        // Функция для выбора случайных вопросов
+        function selectRandomQuestions() {
+            while (selectedQuestions.length < 20) {
+                var randomIndex = Math.floor(Math.random() * questions.length);
+                if (!selectedQuestions.includes(questions[randomIndex])) {
+                    selectedQuestions.push(questions[randomIndex]);
+                }
+            }
+        }
+
+        // Функция для генерации викторины
+        function generateQuiz() {
+            var quizContainer = document.getElementById('quiz-container');
+            selectRandomQuestions();
+
+            selectedQuestions.forEach(function (q, index) {
+                var questionHtml = '<div><h2>Вопрос ' + (index + 1) + '</h2>';
+                questionHtml += '<p>' + q.question_text + '</p>';
+                questionHtml += '<ul>';
+                q.answers.forEach(function (answer) {
+                    // Заменяем атрибут value на data-value
+                    questionHtml += '<li><input type="checkbox" name="question' + index + '" data-value="' + answer + '">' + answer + '</li>';
+                });
+                questionHtml += '</ul></div>';
+
+                quizContainer.innerHTML += questionHtml;
+            });
+        }
+
+        // Функция для проверки ответов и отображения результатов
+        function submitQuiz() {
+            var resultsContainer = document.getElementById('results-container');
+            var score = 0;
+
+            selectedQuestions.forEach(function (q, index) {
+                var correctAnswersSelected = true;
+                var incorrectAnswersSelected = false;
+
+                q.correct_answers.forEach(function (correctAnswer) {
+                    // Заменяем атрибут value на data-value
+                    var escapedAnswer = correctAnswer.replace(/"/g, '\\"'); // Экранируем кавычки в строке
+                    var answerContainer = document.querySelector('input[data-value="' + escapedAnswer + '"]:checked');
+                    if (!answerContainer) {
+                        correctAnswersSelected = false;
+                    }
+                });
+
+                q.answers.forEach(function (answer) {
+                    // Заменяем атрибут value на data-value
+                    var escapedAnswer = answer.replace(/"/g, '\\"'); // Экранируем кавычки в строке
+                    var answerContainer = document.querySelector('input[data-value="' + escapedAnswer + '"]:checked');
+                    if (answerContainer && !q.correct_answers.includes(answer)) {
+                        incorrectAnswersSelected = true;
+                    }
+                });
+
+                if (correctAnswersSelected && !incorrectAnswersSelected) {
+                    score++;
+                    // Подсветка вопроса зеленым цветом
+                    document.getElementById('quiz-container').children[index].style.backgroundColor = 'lightgreen';
+                } else {
+                    // Подсветка вопроса красным цветом
+                    document.getElementById('quiz-container').children[index].style.backgroundColor = 'lightcoral';
+                }
+            });
+
+            resultsContainer.innerHTML = '<h2>Ваш результат: правильных ответов ' + score + ' из ' + selectedQuestions.length + '</h2><p>Можете изменить свои ответы и снова нажать кнопку "Проверить"</p><p>Для загрузки нового набора вопросов перезагрузите страницу</p>';
+
+            scrollToBottom();
+        }
+
+        // Функция для прокрутки страницы к концу
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        // Функция для перехода на главную страницу
+        function goToHomePage() {
+            window.location.href = "index.html"; // Переход на главную страницу
+        }
+
+        // Генерация викторины при загрузке страницы
+        window.onload = function () {
+            generateQuiz();
+        };
+    </script>
+</body>
+</html>

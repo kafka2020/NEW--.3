@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+#quiz-container {
+    margin-bottom: 20px;
+}
+
+#quiz-container div {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+#quiz-container h2 {
+    font-size: 20px;
+    margin-top: 0;
+}
+
+#quiz-container p {
+    margin-top: 0;
+}
+
+#quiz-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#quiz-container li {
+    margin-bottom: 15px;
+}
+
+#quiz-container input[type="checkbox"] {
+    margin-right: 20px;
+    transform: scale(1.5); /* Увеличиваем размер чекбокса */
+}
+
+button {
+    font-size: 28px;
+    padding: 20px 20px;
+    margin: 20px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#results-container {
+    font-size: 20px;
+    margin-top: 20px;
+    padding-left: 20px;
+}
+
+/* Увеличение размера чекбокса */
+input[type="checkbox"] {
+    top: 8px;
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #555; /* Цвет обводки чекбокса */
+    border-radius: 4px; /* Скругление углов */
+    outline: none; /* Убираем обводку при фокусе */
+}
+
+/* Стили для обведения чекбокса при наведении */
+input[type="checkbox"]:hover {
+    border-color: #007bff; /* Цвет обводки при наведении */
+}
+
+/* Стили для отмеченного чекбокса */
+input[type="checkbox"]:checked {
+    border-color: #007bff; /* Цвет обводки для отмеченного чекбокса */
+    background-color: #007bff; /* Цвет фона для отмеченного чекбокса */
+}
+
+
+/* Стили для внутреннего квадрата при отмеченном чекбоксе */
+input[type="checkbox"]:checked::before {
+    background-color: #fff; /* Цвет внутреннего квадрата для отмеченного чекбокса */
+}
+
+.container {
+    margin: 10px;
+}
